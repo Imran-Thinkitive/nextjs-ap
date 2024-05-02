@@ -5,7 +5,8 @@ const home = () => {
     <div>
       <TopicList />
     </div>
-  );
+  )
 };
 
 export default home;
+
