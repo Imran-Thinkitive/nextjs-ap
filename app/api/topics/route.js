@@ -29,10 +29,13 @@ export async function GET(request) {
 
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
-  await connectMongoDB();
-  await Topic.findByIdAndDelete(id);
+  // await connectMongoDB();
+  // await Topic.findByIdAndDelete(id);
+  const topicData = await prisma.topic.delete({ where: { id: id } });
   return NextResponse.json(
     { message: "Topic deleted successfully" },
     { status: 200 }
   );
 }
+
+

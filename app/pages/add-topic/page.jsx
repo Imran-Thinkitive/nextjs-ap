@@ -1,12 +1,17 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const AddTopic = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const router = useRouter();
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    if (!title || !content) {
+      alert("title and description required.");
+      return;
+    }
     try {
       const res = await fetch(process.env.NEXT_PUBLIC_FETCH_URL, {
         method: "POST",
@@ -16,10 +21,10 @@ const AddTopic = () => {
         body: JSON.stringify({ title, content }),
       });
 
-      console.log("res : ", res);
-
       if (res.ok) {
-        console.log("Post request successful");
+        router.push("/");
+      } else {
+        throw new Error("failed to create topics");
       }
     } catch (error) {
       console.log("errors");
